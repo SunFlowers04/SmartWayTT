@@ -9,7 +9,7 @@ import (
 )
 
 type (
-	// Config -.
+	// Config
 	Config struct {
 		HTTP
 		PG
@@ -50,18 +50,6 @@ func NewConfig() (*Config, error) {
 		}
 		fmt.Print("Environment variable success: variables successfully read from .env\n")
 	}
-
-	return cfg, nil
-}
-
-func NewConfigByPath(path string) (*Config, error) {
-	cfg := &Config{}
-	err := cleanenv.ReadConfig(path, cfg)
-	if err != nil {
-		return nil, err
-	}
-
-	fmt.Print("Environment variable success: variables successfully read from .env\n")
 
 	return cfg, nil
 }

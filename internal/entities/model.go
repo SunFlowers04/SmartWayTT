@@ -4,31 +4,30 @@ import "time"
 
 // Flight - сущность для таблицы Flight (билеты)
 type Flight struct {
-	ID            string    `gorm:"primaryKey;type:varchar(255)" json:"flightId"`
-	Departure     string    `gorm:"type:varchar(255)" json:"departure"`
-	Destination   string    `gorm:"type:varchar(255)" json:"destination"`
-	OrderNumber   string    `gorm:"type:varchar(255)" json:"orderNumber"`
-	Provider      string    `gorm:"type:varchar(255)" json:"provider"`
-	DepartureDate time.Time `gorm:"type:timestamp" json:"departureDate"`
-	ArrivalDate   time.Time `gorm:"type:timestamp" json:"arrivalDate"`
-	BookingDate   time.Time `gorm:"type:timestamp" json:"bookingDate"`
+	FlightID      string    `json:"flightId"`      // Уникальный идентификатор рейса
+	Departure     string    `json:"departure"`     // Пункт отправления
+	Destination   string    `json:"destination"`   // Пункт назначения
+	OrderNumber   string    `json:"orderNumber"`   // Номер заказа
+	Provider      string    `json:"provider"`      // Поставщик (supplier)
+	DepartureDate time.Time `json:"departureDate"` // Дата вылета
+	ArrivalDate   time.Time `json:"arrivalDate"`   // Дата прилета
+	BookingDate   time.Time `json:"bookingDate"`   // Дата оформления рейса (service_date)
+	Status        string    `json:"status"`        // Статус рейса (booked, completed, cancelled)
 }
 
 // Passenger - сущность для таблицы Passenger (пассажиры)
 type Passenger struct {
-	ID         string `gorm:"primaryKey;type:varchar(255)" json:"id"`
-	FlightID   string `gorm:"type:varchar(255);not null" json:"flightId"`
-	LastName   string `gorm:"type:varchar(255);not null" json:"lastName"`
-	FirstName  string `gorm:"type:varchar(255);not null" json:"firstName"`
-	MiddleName string `gorm:"type:varchar(255)" json:"middleName"`
-	Flight     Flight `gorm:"foreignKey:FlightID" json:"flight"`
+	PassengerID string `json:"id"`         // Уникальный идентификатор пассажира
+	FlightID    string `json:"flightId"`   // ID рейса, к которому привязан пассажир
+	LastName    string `json:"lastName"`   // Фамилия пассажира
+	FirstName   string `json:"firstName"`  // Имя пассажира
+	MiddleName  string `json:"middleName"` // Отчество (может быть пустым)
 }
 
 // Document - сущность для таблицы Document (документы пассажира)
 type Document struct {
-	ID             string    `gorm:"primaryKey;type:varchar(255)" json:"id"`
-	PassengerID    string    `gorm:"type:varchar(255);not null" json:"passengerId"`
-	DocumentType   string    `gorm:"type:varchar(255);not null" json:"documentType"`
-	DocumentNumber string    `gorm:"type:varchar(255);not null" json:"documentNumber"`
-	Passenger      Passenger `gorm:"foreignKey:PassengerID" json:"passenger"`
+	DocumentID     string `json:"id"`             // Уникальный идентификатор документа
+	PassengerID    string `json:"passengerId"`    // ID пассажира, к которому привязан документ
+	DocumentType   string `json:"documentType"`   // Тип документа (паспорт, виза и т. д.)
+	DocumentNumber string `json:"documentNumber"` // Номер документа
 }
